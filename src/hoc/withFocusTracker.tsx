@@ -1,7 +1,7 @@
 import React from 'react';
 import { composeEventHandlers } from '../utils/composeEventHandlers';
 
-interface FocusTrackerInjectedProps {
+export interface FocusTrackerInjectedProps {
   isFocused: boolean;
   onFocusChange?: (isFocused: boolean) => void;
   onFocus?: (event: React.FocusEvent) => void;

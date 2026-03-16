@@ -1,24 +1,10 @@
 import './App.css'
 import React from 'react';
-import withFocusTracker from './hoc/withFocusTracker';
+import withFocusTracker, { type FocusTrackerInjectedProps } from './hoc/withFocusTracker';
+import Input, { type InputProps } from './components/Input';
+import Label, { type LabelProps } from './components/Label';
+import FocusStatus from './components/FocusStatus';
 
-interface InputProps {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-// Пример 1: компонент С СОБСТВЕННЫМ DOM-узлом.
-// Здесь компонент сам рендерит <input> и пробрасывает в него ref.
-// Доп. проп isFocused «виден» только для HOC и не входит в публичный интерфейс InputProps.
-const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  return <input {...props} ref={ref} />;
-});
-
-const InputWithFocusTracker = withFocusTracker(Input);
-
-// Пример 2: компонент БЕЗ корневого DOM-узла.
-// Он возвращает несколько элементов через React.Fragment (<>...</>),
-// то есть у него нет одного корневого DOM-элемента.
 interface InputContainerProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -35,25 +21,13 @@ const InputContainer = React.forwardRef<HTMLElement, InputContainerProps>((props
   );
 });
 
-const InputContainerWithFocusTracker = withFocusTracker(InputContainer);
+type InputWithFocusTrackerProps = InputProps & Partial<FocusTrackerInjectedProps>;
+type InputContainerWithFocusTrackerProps = InputContainerProps & Partial<FocusTrackerInjectedProps>;
+type LabelWithFocusTrackerProps = LabelProps & Partial<FocusTrackerInjectedProps>;
 
-// Пример 3: ещё один компонент без корневого DOM-элемента.
-// Возвращает два <span> как соседние элементы внутри Fragment.
-interface LabelProps {
-  text: string;
-  isFocused?: boolean;
-}
-
-const Label: React.FC<LabelProps> = ({ text, isFocused }) => (
-  <>
-    <span>{text}</span>
-    <span style={{ marginLeft: 8 }}>
-      {isFocused ? ' (в фокусе wrapper HOC)' : ' (не в фокусе wrapper HOC)'}
-    </span>
-  </>
-);
-
-const LabelWithFocusTracker = withFocusTracker<LabelProps>(Label);
+const InputWithFocusTracker = withFocusTracker<InputProps>(Input) as React.ComponentType<InputWithFocusTrackerProps>;
+const InputContainerWithFocusTracker = withFocusTracker<InputContainerProps>(InputContainer) as React.ComponentType<InputContainerWithFocusTrackerProps>;
+const LabelWithFocusTracker = withFocusTracker<LabelProps>(Label) as React.ComponentType<LabelWithFocusTrackerProps>;
 
 function App() {
 
@@ -64,7 +38,6 @@ function App() {
 
   return (
     <>
-      {/* Пример 1: компонент с собственным DOM-узлом (Input + HOC) */}
       <InputWithFocusTracker
         value={value}
         onChange={e => setValue(e.target.value)}
@@ -72,9 +45,12 @@ function App() {
         onFocus={() => console.log('Focused')}
         onBlur={() => console.log('Blurred')}
       />
-      {focusedInput ? <span>Поле в фокусе</span> : <span>Поле не в фокусе</span>}
+      <FocusStatus
+        isFocused={focusedInput}
+        focusedText="Поле в фокусе"
+        blurredText="Поле не в фокусе"
+      />
 
-      {/* Пример 2: компонент без собственного DOM-узла (InputContainer) */}
       <InputContainerWithFocusTracker
         value={value}
         onChange={e => setValue(e.target.value)}
@@ -82,17 +58,23 @@ function App() {
         onFocus={() => console.log('Focused')}
         onBlur={() => console.log('Blurred')}
       />
-      {focusedInputContainer ? <span>Wrapper контейнера в фокусе</span> : <span>Wrapper контейнера не в фокусе</span>}
+      <FocusStatus
+        isFocused={focusedInputContainer}
+        focusedText="Wrapper контейнера в фокусе"
+        blurredText="Wrapper контейнера не в фокусе"
+      />
 
-      {/* Пример 3: компонент без корневого DOM-узла (Label),
-          HOC сам создаёт корневой <div>, поэтому фокус всё равно отслеживается */}
       <LabelWithFocusTracker
         text="Метка"
         onFocusChange={setFocusedLabel}
         onFocus={() => console.log('Focused label')}
         onBlur={() => console.log('Blurred label')}
       />
-      {focusedLabel ? <span>Wrapper метки в фокусе</span> : <span>Wrapper метки не в фокусе</span>}
+      <FocusStatus
+        isFocused={focusedLabel}
+        focusedText="Wrapper метки в фокусе"
+        blurredText="Wrapper метки не в фокусе"
+      />
     </>
   )
 } 
