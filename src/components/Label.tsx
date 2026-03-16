@@ -5,13 +5,10 @@ export interface LabelProps {
   isFocused?: boolean;
 }
 
-const Label: React.FC<LabelProps> = ({ text, isFocused }) => (
-  <>
-    <span>{text}</span>
-    <span style={{ marginLeft: 8 }}>
-      {isFocused ? ' (в фокусе wrapper HOC)' : ' (не в фокусе wrapper HOC)'}
-    </span>
-  </>
+const Label: React.FC<LabelProps> = ({ text }) => (
+  <div className="label">
+    <span className="label__text">{text}</span>
+  </div>
 );
 
 export default Label;

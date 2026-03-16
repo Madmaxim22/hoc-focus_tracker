@@ -1,13 +1,13 @@
-import React from 'react';
-
 interface FocusStatusProps {
   isFocused: boolean;
-  focusedText: string;
-  blurredText: string;
 }
 
-const FocusStatus: React.FC<FocusStatusProps> = ({ isFocused, focusedText, blurredText }) => {
-  return <span>{isFocused ? focusedText : blurredText}</span>;
-};
-
-export default FocusStatus;
+export default function FocusStatus({ isFocused }: FocusStatusProps) {
+  return (
+    <div className="focus-status">
+      <span className={`focus-status__badge ${isFocused ? 'focus-status__badge--focused' : 'focus-status__badge--blurred'}`}>
+        {isFocused ? 'В фокусе' : 'Не в фокусе'}
+      </span>
+    </div>
+  );
+}

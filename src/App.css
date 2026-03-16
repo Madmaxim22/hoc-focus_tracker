@@ -1,0 +1,230 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #1f2937 0, #020617 55%);
+  color: #e5e7eb;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.app__inner {
+  width: 100%;
+  max-width: 1120px;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 24px;
+  padding: 32px 28px 28px;
+  box-shadow:
+    0 24px 80px rgba(15, 23, 42, 0.8),
+    0 0 0 1px rgba(148, 163, 184, 0.1);
+  backdrop-filter: blur(18px);
+}
+
+.app__header {
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+  padding-bottom: 20px;
+}
+
+.app__title {
+  margin: 0 0 8px;
+  font-size: 26px;
+  letter-spacing: 0.02em;
+}
+
+.app__subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.app__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.2), rgba(15, 23, 42, 0.95));
+  border-radius: 18px;
+  padding: 18px 16px 16px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card__title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.card__description {
+  margin: 0;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.card__control {
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease,
+    transform 0.08s ease;
+}
+
+input::placeholder {
+  color: #6b7280;
+}
+
+input:focus {
+  border-color: #60a5fa;
+  box-shadow:
+    0 0 0 1px rgba(37, 99, 235, 0.7),
+    0 10px 25px rgba(37, 99, 235, 0.45);
+  background: rgba(15, 23, 42, 0.95);
+  transform: translateY(-1px);
+}
+
+.focus-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.focus-status__badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+
+.focus-status__badge--focused {
+  background: rgba(34, 197, 94, 0.16);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #bbf7d0;
+}
+
+.focus-status__badge--blurred {
+  background: rgba(148, 163, 184, 0.15);
+  border-color: rgba(148, 163, 184, 0.5);
+  color: #e5e7eb;
+}
+
+.focus-status__text {
+  color: #9ca3af;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.label__text {
+  font-size: 14px;
+}
+
+.label__status {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+}
+
+.hoc-wrapper {
+  position: relative;
+  padding: 14px 12px 10px;
+  border-radius: 14px;
+  border: 1px dashed rgba(96, 165, 250, 0.7);
+  background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), rgba(15, 23, 42, 0.95));
+}
+
+.hoc-wrapper__badge {
+  position: absolute;
+  top: -11px;
+  right: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(96, 165, 250, 0.75);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #bfdbfe;
+  white-space: nowrap;
+}
+
+.demo-container {
+  position: relative;
+  padding: 14px 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: rgba(15, 23, 42, 0.9);
+}
+
+.demo-container__badge {
+  position: absolute;
+  top: -11px;
+  left: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.85);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e5e7eb;
+  white-space: nowrap;
+}
+
+.demo-container__title {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #e5e7eb;
+}
+
+@media (max-width: 640px) {
+  .app__inner {
+    padding: 22px 18px 18px;
+    border-radius: 20px;
+  }
+
+  .app__title {
+    font-size: 22px;
+  }
+
+  .card {
+    padding: 16px 14px 14px;
+  }
+}
