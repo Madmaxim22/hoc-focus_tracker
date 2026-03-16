@@ -9,9 +9,10 @@ interface InputProps {
 
 // Пример 1: компонент С СОБСТВЕННЫМ DOM-узлом.
 // Здесь компонент сам рендерит <input> и пробрасывает в него ref.
-const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => (
-  <input {...props} ref={ref} />
-));
+// Доп. проп isFocused «виден» только для HOC и не входит в публичный интерфейс InputProps.
+const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  return <input {...props} ref={ref} />;
+});
 
 const InputWithFocusTracker = withFocusTracker(Input);
 
@@ -23,7 +24,7 @@ interface InputContainerProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const InputContainer = React.forwardRef<HTMLElement, InputContainerProps>((props, ref) => {
+const InputContainer = React.forwardRef<HTMLElement, InputContainerProps>((props) => {
   // здесь нет ни <div>, ни <input>, ни ref на DOM
   return (
     <>
@@ -68,8 +69,8 @@ function App() {
         value={value}
         onChange={e => setValue(e.target.value)}
         onFocusChange={setFocusedInput}
-        onFocus={e => console.log('Focused')}
-        onBlur={e => console.log('Blurred')}
+        onFocus={() => console.log('Focused')}
+        onBlur={() => console.log('Blurred')}
       />
       {focusedInput ? <span>Поле в фокусе</span> : <span>Поле не в фокусе</span>}
 
@@ -78,8 +79,8 @@ function App() {
         value={value}
         onChange={e => setValue(e.target.value)}
         onFocusChange={setFocusedInputContainer}
-        onFocus={e => console.log('Focused')}
-        onBlur={e => console.log('Blurred')}
+        onFocus={() => console.log('Focused')}
+        onBlur={() => console.log('Blurred')}
       />
       {focusedInputContainer ? <span>Wrapper контейнера в фокусе</span> : <span>Wrapper контейнера не в фокусе</span>}
 
@@ -88,8 +89,8 @@ function App() {
       <LabelWithFocusTracker
         text="Метка"
         onFocusChange={setFocusedLabel}
-        onFocus={e => console.log('Focused label')}
-        onBlur={e => console.log('Blurred label')}
+        onFocus={() => console.log('Focused label')}
+        onBlur={() => console.log('Blurred label')}
       />
       {focusedLabel ? <span>Wrapper метки в фокусе</span> : <span>Wrapper метки не в фокусе</span>}
     </>
