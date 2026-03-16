@@ -27,12 +27,21 @@ function withFocusTracker<P>(
         setIsFocused(false);
         onFocusChange?.(false);
       };
-      return (
-        <div 
-        tabIndex={-1} 
-        onFocus={composeEventHandlers(onFocus, handleFocus)} 
-        onBlur={composeEventHandlers(onBlur, handleBlur)}
-        ref={_ref as React.ForwardedRef<HTMLDivElement>}
+
+      return _ref ? (
+        <WrappedComponent
+          {...(restProps as P)}
+          isFocused={isFocused}
+          onFocus={composeEventHandlers(onFocus, handleFocus)}
+          onBlur={composeEventHandlers(onBlur, handleBlur)}
+          ref={_ref as React.ForwardedRef<HTMLElement>}
+        />
+      ) : (
+        <div
+          tabIndex={-1}
+          onFocus={composeEventHandlers(onFocus, handleFocus)}
+          onBlur={composeEventHandlers(onBlur, handleBlur)}
+          ref={_ref as React.ForwardedRef<HTMLDivElement>}
         >
           <WrappedComponent
             {...(restProps as P)}
