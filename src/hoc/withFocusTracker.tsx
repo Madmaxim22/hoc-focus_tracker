@@ -8,7 +8,7 @@ export interface FocusTrackerInjectedProps<T = HTMLElement> {
   onBlur?: (event: React.FocusEvent<T>) => void;
 }
 
-function useFocusTracker<T extends HTMLElement = HTMLElement>(
+function useFocusTracker(
   onFocusChange?: (isFocused: boolean) => void
 ) {
   const [isFocused, setIsFocused] = React.useState(false);
@@ -38,7 +38,7 @@ export function withFocusOnComponent<P, T extends HTMLElement = HTMLElement>(
   const Component = React.memo(
     React.forwardRef<T, P & FocusTrackerInjectedProps<T>>((props, ref) => {
       const { onFocusChange, onFocus, onBlur, ...restProps } = props;
-      const { isFocused, handleFocus, handleBlur } = useFocusTracker<T>(onFocusChange);
+      const { isFocused, handleFocus, handleBlur } = useFocusTracker(onFocusChange);
 
       return (
         <WrappedComponent
